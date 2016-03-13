@@ -5,7 +5,6 @@ namespace Assets.Scripts
     public class PlayerController : MonoBehaviour
     {
         public float Speed = 10;
-
         private Rigidbody _rigidbody;
 
         public void Start()
