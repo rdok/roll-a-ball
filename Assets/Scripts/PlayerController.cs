@@ -1,16 +1,27 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts
 {
     public class PlayerController : MonoBehaviour
     {
         public float Speed = 10;
-        private Rigidbody _rigidbody;
+
+        public Text ScoreText;
+        public Text WinText;
         public static string PickUpTag = "Pick Up";
+
+        private Rigidbody _rigidbody;
+        private int _pickUpCount;
 
         public void Start()
         {
             _rigidbody = GetComponent<Rigidbody>();
+
+            _pickUpCount = 0;
+
+            UpdateScoreText();
+            UpdateWinText("");
         }
 
         public void FixedUpdate()
@@ -25,11 +36,25 @@ namespace Assets.Scripts
 
         public void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.CompareTag(PickUpTag))
-            {
-                other.gameObject.SetActive(false);
-            }
+            if (!other.gameObject.CompareTag(PickUpTag)) return;
+
+            other.gameObject.SetActive(false);
+
+            _pickUpCount++;
+
+            UpdateScoreText();
         }
 
+        private void UpdateScoreText()
+        {
+            ScoreText.text = "Score: " + _pickUpCount;
+
+            if(_pickUpCount > 22) UpdateWinText("You win!");
+        }
+
+        private void UpdateWinText(string message)
+        {
+            WinText.text = message;
+        }
     }
 }
