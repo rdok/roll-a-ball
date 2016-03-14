@@ -6,6 +6,7 @@ namespace Assets.Scripts
     {
         public float Speed = 10;
         private Rigidbody _rigidbody;
+        public static string PickUpTag = "Pick Up";
 
         public void Start()
         {
@@ -21,5 +22,14 @@ namespace Assets.Scripts
 
             _rigidbody.AddForce(movement * Speed);
         }
+
+        public void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.CompareTag(PickUpTag))
+            {
+                other.gameObject.SetActive(false);
+            }
+        }
+
     }
 }
